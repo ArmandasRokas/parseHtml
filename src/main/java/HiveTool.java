@@ -15,11 +15,12 @@ public class HiveTool {
         int hiveId = 240;
         String startTime = "2019-10-19";
         String endTime = "2019-10-26";
+        int numOfDays = 7;
 
 
         Document doc = null;
         try {
-            doc = Jsoup.connect("http://hivetool.net/db/hive_graph706.pl?chart=Temperature&new_hive_id="+hiveId+"&start_time=" + startTime+ "+23%3A59%3A59&end_time=" +endTime+ "+23%3A59%3A59&hive_id=240&number_of_days=7&last_max_dwdt_lbs_per_hour=30&weight_filter=Raw&max_dwdt_lbs_per_hour=&days=&begin=&end=&units=Metric&undefined=Skip&download_data=Download&download_file_format=csv").get();
+            doc = Jsoup.connect("http://hivetool.net/db/hive_graph706.pl?chart=Temperature&new_hive_id="+hiveId+"&start_time=" + startTime+ "+23%3A59%3A59&end_time=" +endTime+ "+23%3A59%3A59&hive_id="+hiveId+"&number_of_days=" +numOfDays+ "&last_max_dwdt_lbs_per_hour=30&weight_filter=Raw&max_dwdt_lbs_per_hour=&days=&begin=&end=&units=Metric&undefined=Skip&download_data=Download&download_file_format=csv").get();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,15 +30,13 @@ public class HiveTool {
         String[] lines = e.wholeText().split("\n");
 
         for(int i = 2; i<lines.length; i++){
-            String[] line = lines[i].split(" ");
-            if(line.length == 0){
+            String[] raw_data = lines[i].split("(,|\\s)");
+            if(raw_data.length == 0){
                 break;
             }
-            String date =line[0];
-            String[] raw_data = line[1].split(",");
 
+            System.out.println(raw_data[0] + " " + raw_data[1] + " " + raw_data[2] );
 
-            System.out.println(date + " " + raw_data[0]);
         }
 
     }
