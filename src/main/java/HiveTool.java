@@ -12,10 +12,16 @@ public class HiveTool {
 
     public static void main(String[] args) {
 
+        /**
+         * It gives RequestTimeout exception, if there is requesting more
+         * than two months data. The solution could be to allow see a graph for instance for every month,
+         * not for a whole year. Buttons. This month, last month or something similar.
+         * It solves the problem when the graph is zoomed out.
+         */
         int hiveId = 240;
-        String startTime = "2019-10-19";
+        String startTime = "2019-08-19";
         String endTime = "2019-10-26";
-        int numOfDays = 7;
+        int numOfDays = 60;
 
 
         Document doc = null;
